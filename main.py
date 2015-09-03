@@ -32,24 +32,12 @@ class MainPage(webapp2.RequestHandler):
                         + os.environ['CURRENT_VERSION_ID'] + '\n')
 		self.response.write('Using bucket name: ' + bucket_name + '\n\n')
 		bucket = '/' + bucket_name
-		filename = bucket + '/BT_postcodes_1.csv'
-		filename2 = bucket + '/BT_postcodes_2.csv'
-		filename3 = bucket + '/BT_postcodes_3.csv'
-		filename4 = bucket + '/EH_postcodes_1.csv'
-		filename5 = bucket + '/EH_postcodes_2.csv'
-		filename6 = bucket + '/G_postcodes_1.csv'
-		filename7 = bucket + '/G_postcodes_2.csv'
+		filename = bucket + '/G_postcodes_2.csv'
 		self.tmp_filenames_to_clean_up = []
 		
 		try:
-			self.create_file(filename, 'BT_postcodes_1.csv')
-			self.create_file(filename2, 'BT_postcodes_2.csv')
-			self.create_file(filename3, 'BT_postcodes_3.csv')
-			self.create_file(filename4, 'EH_postcodes_1.csv')
-			self.create_file(filename5, 'EH_postcodes_2.csv')
-			self.create_file(filename6, 'G_postcodes_1.csv')
-			self.create_file(filename7, 'G_postcodes_2.csv')
-			self.read_file(filename7)
+			self.create_file(filename, 'G_postcodes_2.csv')
+			self.read_file(filename)
 			self.response.write('\n\n')
 
 		except Exception, e:  # pylint: disable=broad-except
