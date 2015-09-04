@@ -5,6 +5,8 @@
 #GP Surgeries - http://data.gov.uk/dataset/england-nhs-connecting-for-health-organisation-data-service-data-files-of-general-medical-practices
 #Postcodes and area codes - http://www.freemaptools.com/download-uk-postcode-lat-lng.htm
 #Postcodes - http://www.doogal.co.uk/UKPostcodes.php?
+#Cloud storage library reference - https://cloud.google.com/appengine/docs/python/googlecloudstorageclient/download
+#Program reference - https://cloud.google.com/appengine/docs/python/googlecloudstorageclient/getstarted
 
 import logging
 import os
@@ -14,6 +16,7 @@ import webapp2
 
 from google.appengine.api import app_identity
 
+# Retry param class reference - https://cloud.google.com/appengine/docs/python/googlecloudstorageclient/retryparams_class
 # Retry can help overcome transient urlfetch or GCS issues, such as timeouts.
 my_default_retry_params = gcs.RetryParams(initial_delay=0.2,
                                           max_delay=5.0,
@@ -23,7 +26,6 @@ gcs.set_default_retry_params(my_default_retry_params)
 
 
 class MainPage(webapp2.RequestHandler):
-	"""Main page for GCS demo application."""
 
 	def get(self):
 		bucket_name = os.environ.get('local-amenities.appspot.com', app_identity.get_default_gcs_bucket_name())
@@ -40,14 +42,12 @@ class MainPage(webapp2.RequestHandler):
 			self.read_file(filename)
 			self.response.write('\n\n')
 
-		except Exception, e:  # pylint: disable=broad-except
+		except Exception, e:  
 			logging.exception(e)
 			self.response.write('\n\nThere was an error running the demo! '
 								'Please check the logs for more details.\n')
  
-# When writing a file to Cloud Storage, you should not call finally:close() as
-# this can result in finalizing object uploads even if there was an exception
-# during a write.
+
 	def create_file(self, filename, local_file):
 		self.response.write('Creating file %s\n' % filename)
 		write_retry_params = gcs.RetryParams(backoff_factor=1.1)
